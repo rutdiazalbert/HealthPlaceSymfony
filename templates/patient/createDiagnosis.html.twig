@@ -1,0 +1,16 @@
+{% extends 'baseUser.html.twig' %} {% block body %}
+<div class="container">
+
+
+    {{ form_start(diagnosisForm) }}
+    <h4>Lets make an appointment!</h4>
+    <div class="row">
+
+        {{ form_widget(diagnosisForm) }}
+
+    </div>
+    {{ form_end(diagnosisForm) }}
+
+</div>
+
+{% endblock %}

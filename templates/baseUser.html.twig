@@ -20,7 +20,7 @@
                     {% if app.user %}
                     <a class="nav-link active" href="{{ path(" home ") }}">Home</a>
                     <a class="nav-link" href="{{ path(" upcomingAppo ") }}">Appointments</a>
-                    <a class="nav-link" href="{{ path(" diagnoses ") }}">Diagnoses</a> {% endif %}
+                    <a class="nav-link" href="{{ path(" diagnostics ") }}">Diagnostincs</a> {% endif %}
                 </div>
             </div>
             {% if is_granted("ROLE_PATIENT") %}
@@ -32,7 +32,7 @@
                 <h5>Dr. {{ app.user.surname }}</h5>
             </div>
             {% endif %} {% if app.user %}
-            <a href="{{ path('app_logout') }}">
+            <a class="nav-link" href="{{ path('app_logout') }}">
                 <h6>Logout</h6>
             </a>
             {% endif %}

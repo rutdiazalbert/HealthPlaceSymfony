@@ -2,10 +2,15 @@
 
 <main>
     <div>
-        <h1>Diagnoses</h1>
+        <h1>Diagnostics</h1>
     </div>
     <span>
-        <h5>Review your diagnoses and heed your doctor's instructions</h5>
+        {% if is_granted("ROLE_PATIENT") %}
+        <h5>Review your diagnostics and heed your doctor's instructions</h5>
+        {% endif %}
+        {% if is_granted("ROLE_DOCTOR") %}
+        <h5>All your patients' diagnostics</h5>
+        {% endif %}
     </span>
     <div>
 

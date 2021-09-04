@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\DiagnosisFormType;
 use App\Form\PatientAppointentFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -9,20 +10,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-class PatientController extends AbstractController{
+class UserController extends AbstractController{
 
     /**
-     * @Route("/patient/home", name=" home ")
+     * @Route("/home", name=" home ")
      */
 
     public function home(){
 
-        return $this->render('patient/homePatient.html.twig');
+        return $this->render('patient/home.html.twig');
 
     }
 
     /**
-     * @Route("/patient/appointments/upcoming", name=" upcomingAppo ")
+     * @Route("/appointments/upcoming", name=" upcomingAppo ")
      */
     public function upcomingAppointments(){
 
@@ -31,7 +32,7 @@ class PatientController extends AbstractController{
     }
 
     /**
-     * @Route("/patient/appointments/previous", name=" previousAppo ")
+     * @Route("/appointments/previous", name=" previousAppo ")
      */
     public function previousAppointments(){
 
@@ -41,7 +42,7 @@ class PatientController extends AbstractController{
 
     
     /**
-     * @Route("/patient/diagnoses", name=" diagnoses ")
+     * @Route("/diagnostics", name=" diagnostics ")
      */
     public function diagnoses(){
 
@@ -60,5 +61,17 @@ class PatientController extends AbstractController{
 
 
         return $this->render('patient/createAppointment.html.twig',  ['patientAppointmentForm' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/doctor/diagnosis/create", name=" createDiagnosis ")
+     */
+    public function createDiagnosis(Request $request, EntityManagerInterface $doctrine){
+        $form = $this->createForm(DiagnosisFormType::class);
+
+        $form->handleRequest($request);
+
+
+        return $this->render('patient/createDiagnosis.html.twig',  ['diagnosisForm' => $form->createView()]);
     }
 }

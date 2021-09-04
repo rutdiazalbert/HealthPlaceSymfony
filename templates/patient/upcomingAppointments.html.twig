@@ -3,9 +3,11 @@
 <main>
     <div>
         <h1>APPOINTMENTS</h1>
-        <a href="{{ path(" createAppoPatient ") }}">Make an appointment</a>
+        {% if is_granted("ROLE_PATIENT") %}
+        <a href="{{ path(" createAppoPatient ") }}">Make an appointment</a> {% endif %}
     </div>
     <div>
+        <h5>All your appointments are here</h5>
         <a href="{{ path(" upcomingAppo ") }}"><button>Upcoming</button></a>
         <a href="{{ path(" previousAppo ") }}"><button>Previous</button></a>
     </div>
