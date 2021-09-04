@@ -3,11 +3,11 @@
 <main>
     <div>
         <h1>APPOINTMENTS</h1>
-        <a href="#">Make an appointment</a>
+        <a href="{{ path(" createAppoPatient ") }}">Make an appointment</a>
     </div>
     <div>
-        <a href="#"><button>Upcoming</button></a>
-        <a href="#"><button>Previous</button></a>
+        <a href="{{ path(" upcomingAppo ") }}"><button>Upcoming</button></a>
+        <a href="{{ path(" previousAppo ") }}"><button>Previous</button></a>
     </div>
     <div>
 
