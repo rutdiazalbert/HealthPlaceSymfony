@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> {# Run `composer require symfony/webpack-encore-bundle` and uncomment the following Encore helpers to start using Symfony UX #} {% block stylesheets %} {#{{ encore_entry_link_tags('app') }}#} {% endblock %} {% block javascripts %} {#{{ encore_entry_script_tags('app')
+    }}#} {% endblock %}
+</head>
+
+{# <a class="nav-link" href="{{ path(" listPokemons ") }}">Appointments</a> {% if is_granted("ROLE_PATIENT") %} #}
+
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg  ">
+            <h2>HealthPlace</h2>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    {% if app.user %}
+                    <a class="nav-link active" href="#">Home</a>
+                    <a class="nav-link" href="#">Appointments</a>
+                    <a class="nav-link" href="#">Diagnoses</a> {% endif %}
+                </div>
+            </div>
+            {% if is_granted("ROLE_PATIENT") %}
+            <div>User {{ app.user.name }}</div>
+            {% endif %} {% if is_granted("ROLE_DOCTOR") %}
+            <div>
+                <h4>Dr. {{ app.user.surname }}</h4>
+            </div>
+            {% endif %} {% if app.user %}
+            <a href="{{ path('app_logout') }}">
+                <h5>Logout</h5>
+            </a>
+            {% endif %}
+        </nav>
+
+        {% block body %} {% endblock %}
+    </div>
+</body>
+
+</html>

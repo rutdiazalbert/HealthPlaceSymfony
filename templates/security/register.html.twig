@@ -1,0 +1,13 @@
+{% extends 'baseUser.html.twig' %} {% block body %}
+<div class="container b-userform">
+
+
+    {{ form_start(userForm) }}
+    <h3>Sign up!</h3>
+    <p>* Please don't fill the specialities field if you are not a doctor from HealthPlace</p>
+
+    {{ form_widget(userForm) }} {{ form_end(userForm) }}
+
+</div>
+
+{% endblock %}
