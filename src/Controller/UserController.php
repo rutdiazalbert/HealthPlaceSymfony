@@ -5,29 +5,47 @@ namespace App\Controller;
 use App\Form\DiagnosisFormType;
 use App\Form\PatientAppointentFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Appointment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 
 class UserController extends AbstractController{
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     /**
      * @Route("/home", name=" home ")
      */
 
-    public function home(){
+    public function home(EntityManagerInterface $em){
+        $user = $this->security->getUser();
+        $repo = $em->getRepository(Vehicle::class);
+        $appointments = $repo->findBy(array('patient'=> $user));
+        
 
-        return $this->render('patient/home.html.twig');
+
+        
+
+        return $this->render('patient/home.html.twig', ["appointments" => $appointments]);
 
     }
 
     /**
      * @Route("/appointments/upcoming", name=" upcomingAppo ")
      */
-    public function upcomingAppointments(){
+    public function upcomingAppointments(EntityManagerInterface $doctrine){
+        $repo = $doctrine->getRepository(Appointment::class);
+        $appointments = $repo->findAll();
 
-        return $this->render('patient/upcomingAppointments.html.twig');
+
+        return $this->render('patient/upcomingAppointments.html.twig', ["appointments" => $appointments]);
 
     }
 
@@ -58,8 +76,22 @@ class UserController extends AbstractController{
         $form = $this->createForm(PatientAppointentFormType::class);
 
         $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $appointment = $form->getData();
+
+            $user = $this->security->getUser();
+
+            $appointment->setPatient($user);
 
 
+
+            $doctrine->persist($appointment);
+            $doctrine->flush();
+
+            return $this->redirectToRoute(" upcomingAppo ");
+        }
+
+ 
         return $this->render('patient/createAppointment.html.twig',  ['patientAppointmentForm' => $form->createView()]);
     }
 
